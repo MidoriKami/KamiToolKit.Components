@@ -1,0 +1,31 @@
+﻿<Project Sdk="Dalamud.NET.Sdk/14.0.2">
+    <!-- Project settings -->
+    <PropertyGroup>
+        <LangVersion>preview</LangVersion>
+        <RestorePackagesWithLockFile>false</RestorePackagesWithLockFile>
+    </PropertyGroup>
+
+    <!-- Dalamud.NET.Sdk settings -->
+    <PropertyGroup>
+        <Use_DalamudPackager>false</Use_DalamudPackager>
+    </PropertyGroup>
+
+    <!-- FFXIVClientStructs -->
+    <PropertyGroup Condition="Exists('..\FFXIVClientStructs')">
+        <Use_Dalamud_FFXIVClientStructs>false</Use_Dalamud_FFXIVClientStructs>
+    </PropertyGroup>
+
+    <ItemGroup Condition="Exists('..\FFXIVClientStructs')">
+        <ProjectReference Include="..\FFXIVClientStructs\FFXIVClientStructs\FFXIVClientStructs.csproj" Private="True" />
+        <ProjectReference Include="..\FFXIVClientStructs\InteropGenerator.Runtime\InteropGenerator.Runtime.csproj" Private="True" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\KamiToolKit\KamiToolKit.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Addons\Search\" />
+      <Folder Include="Nodes\" />
+    </ItemGroup>
+</Project>
