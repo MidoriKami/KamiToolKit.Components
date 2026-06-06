@@ -23,9 +23,4 @@
     <ItemGroup>
       <ProjectReference Include="..\KamiToolKit\KamiToolKit.csproj" />
     </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Addons\Search\" />
-      <Folder Include="Nodes\" />
-    </ItemGroup>
 </Project>
