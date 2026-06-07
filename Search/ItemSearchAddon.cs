@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using System.Text.RegularExpressions;
-using KamiToolKit.Components.Search.Nodes;
+using KamiToolKit.Components.ListNodes;
 using Lumina.Excel.Sheets;
 using Lumina.Text.ReadOnly;
 

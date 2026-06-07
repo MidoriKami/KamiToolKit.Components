@@ -1,12 +1,13 @@
 ﻿using System.Numerics;
 using FFXIVClientStructs.FFXIV.Component.GUI;
 using KamiToolKit.Classes;
+using KamiToolKit.Components.Search;
 using KamiToolKit.Interfaces;
 using KamiToolKit.Nodes;
 using Lumina.Excel.Sheets;
 using Lumina.Text.ReadOnly;
 
-namespace KamiToolKit.Components.Search.Nodes;
+namespace KamiToolKit.Components.ListNodes;
 
 /// <summary>
 /// Specialization of <see cref="ListItemNode{T}"/> for use with <see cref="ListNode{T,TU}"/> or <see cref="ItemSearchAddon"/>

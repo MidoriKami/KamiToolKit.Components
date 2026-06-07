@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using System.Text.RegularExpressions;
-using KamiToolKit.Components.Search.Nodes;
+using KamiToolKit.Components.ListNodes;
 using Lumina.Text.ReadOnly;
 
 namespace KamiToolKit.Components.Search;

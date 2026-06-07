@@ -2,7 +2,7 @@
 using KamiToolKit.Interfaces;
 using KamiToolKit.Nodes;
 
-namespace KamiToolKit.Components.Search.Nodes;
+namespace KamiToolKit.Components.ListNodes;
 
 /// <summary>
 /// Implementation of a <see cref="ListItemNode{T}"/> that represents a string.
