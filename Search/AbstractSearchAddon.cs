@@ -16,6 +16,33 @@ namespace KamiToolKit.Components.Search;
 public class AbstractSearchAddon<T, TU> : NativeAddon where TU : ListItemNode<T>, IListItemNode, new() {
 
     /// <summary>
+    /// List of all available options.
+    /// </summary>
+    public List<T> OptionsList {
+        get;
+        set {
+            field = value;
+            ResultsListNode?.OptionsList = value;
+        }
+    } = [];
+
+    /// <summary>
+    /// List of all selected options.
+    /// </summary>
+    public List<T> SelectedOptions { get; private set; } = [];
+
+    /// <summary>
+    /// When true allows multiple items to be selected.
+    /// </summary>
+    public bool AllowMultiselect { get; init; }
+
+    /// <summary>
+    /// Gets or sets an action to be called when the selection has been confirmed.
+    /// Contains the list of selected entries.
+    /// </summary>
+    public Action<List<T>>? ConfirmedSelections { get; set; }
+
+    /// <summary>
     /// Main layout container for this addon.
     /// </summary>
     /// <remarks>
@@ -35,27 +62,6 @@ public class AbstractSearchAddon<T, TU> : NativeAddon where TU : ListItemNode<T>
     protected ListNode<T, TU>? ResultsListNode { get; private set; }
 
     /// <summary>
-    /// List of all available options.
-    /// </summary>
-    public List<T> OptionsList {
-        get;
-        set {
-            field = value;
-            ResultsListNode?.OptionsList = value;
-        }
-    } = [];
-
-    /// <summary>
-    /// List of all selected options.
-    /// </summary>
-    public List<T> SelectedOptions { get; private set; } = [];
-
-    /// <summary>
-    /// When true allows multiple items to be selected.
-    /// </summary>
-    public bool AllowMultiselect { get; set; }
-
-    /// <summary>
     /// Function that is called once the user has pressed "Enter".
     /// </summary>
     protected virtual void OnSearchInputComplete(ReadOnlySeString searchString) { }
@@ -64,12 +70,6 @@ public class AbstractSearchAddon<T, TU> : NativeAddon where TU : ListItemNode<T>
     /// Function that is called for each letter input into the search.
     /// </summary>
     protected virtual void OnSearchInputReceived(ReadOnlySeString searchString) { }
-
-    /// <summary>
-    /// Gets or sets an action to be called when the selection has been confirmed.
-    /// Contains the list of selected entries.
-    /// </summary>
-    public Action<List<T>>? ConfirmedSelections { get; set; }
 
     /// <summary>
     /// Function that is called when the OK button is clicked.
@@ -156,7 +156,7 @@ public class AbstractSearchAddon<T, TU> : NativeAddon where TU : ListItemNode<T>
         // Initialize all TextId properties for contained nodes.
         addon->UldManager.SetupTextRecursive();
 
-        // The node doesn't know that we just indirectly set its text value, inform it.
+        // The search node doesn't know that we just indirectly set its text value, inform it.
         SearchInputNode.PlaceholderString = SearchInputNode.PlaceholderTextNode.String.ToString();
     }
 
