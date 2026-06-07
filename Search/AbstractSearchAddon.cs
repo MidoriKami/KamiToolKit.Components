@@ -66,10 +66,17 @@ public class AbstractSearchAddon<T, TU> : NativeAddon where TU : ListItemNode<T>
     protected virtual void OnSearchInputReceived(ReadOnlySeString searchString) { }
 
     /// <summary>
+    /// Gets or sets an action to be called when the selection has been confirmed.
+    /// Contains the list of selected entries.
+    /// </summary>
+    public Action<List<T>>? ConfirmedSelections { get; set; }
+
+    /// <summary>
     /// Function that is called when the OK button is clicked.
     /// </summary>
     protected virtual void OnConfirmClicked() {
         SelectedOptions = ResultsListNode?.SelectedItems ?? [];
+        ConfirmedSelections?.Invoke(SelectedOptions);
         Close();
     }
 
