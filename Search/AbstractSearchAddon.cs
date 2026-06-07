@@ -53,7 +53,7 @@ public class AbstractSearchAddon<T, TU> : NativeAddon where TU : ListItemNode<T>
     /// <summary>
     /// When true allows multiple items to be selected.
     /// </summary>
-    public bool AllowMultiselect { get; set; } = false;
+    public bool AllowMultiselect { get; set; }
 
     /// <summary>
     /// Function that is called once the user has pressed "Enter".
