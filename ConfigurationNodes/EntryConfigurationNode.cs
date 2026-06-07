@@ -1,0 +1,66 @@
+﻿using FFXIVClientStructs.FFXIV.Component.GUI;
+using KamiToolKit.Nodes;
+using Lumina.Data.Parsing.Uld;
+
+namespace KamiToolKit.Components.ConfigurationNodes;
+
+/// <summary>
+/// Node representing an editor for the various fields or properties of the contained type.
+/// </summary>
+public abstract class EntryConfigurationNode<T> : ResNode where T : class {
+
+    /// <summary>
+    /// Sets the node to display information for the specified entry.
+    /// </summary>
+    /// <remarks>
+    /// If null will hide the config options and show "Select an Item"
+    /// </remarks>
+    public void SelectEntry(T? entry) {
+        if (entry is null) {
+            ConfigurationContentNode.IsVisible = false;
+            SelectAnItemTextNode.IsVisible = true;
+        }
+        else {
+            ConfigurationContentNode.IsVisible = true;
+            SelectAnItemTextNode.IsVisible = false;
+
+            PopulateEntryData(entry);
+        }
+    }
+
+    /// <summary>
+    /// Gets the text node that shows "Select an Item" when no item is selected.
+    /// </summary>
+    protected TextNode SelectAnItemTextNode { get; }
+
+    /// <summary>
+    /// Gets the content node you need to attach your options to.
+    /// </summary>
+    protected ResNode ConfigurationContentNode { get; }
+
+    /// <summary>
+    /// Function that is called when this configuration node is representing a different entry.
+    /// </summary>
+    protected abstract void PopulateEntryData(T entry);
+
+    protected EntryConfigurationNode() {
+        SelectAnItemTextNode = new TextNode {
+            TextId = 1818,
+            SheetType = NodeData.SheetType.Addon,
+            AlignmentType = AlignmentType.Center,
+        };
+        SelectAnItemTextNode.AttachNode(this);
+
+        ConfigurationContentNode = new ResNode {
+            IsVisible = false,
+        };
+        ConfigurationContentNode.AttachNode(this);
+    }
+
+    protected override void OnSizeChanged() {
+        base.OnSizeChanged();
+
+        SelectAnItemTextNode.Size = Size;
+        ConfigurationContentNode.Size = Size;
+    }
+}
