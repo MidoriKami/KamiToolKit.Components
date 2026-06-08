@@ -58,6 +58,11 @@ public class TabbedConfigurationAddon<T, TU, TV, TW> : NativeAddon
     public Action<T>? RemoveClicked { get; set; }
 
     /// <summary>
+    /// The starting nav index for the body section of nodes next to the selection list.
+    /// </summary>
+    protected int BodyNavIndex { get; private set; } = 150;
+
+    /// <summary>
     /// Main layout container for this addon.
     /// </summary>
     /// <remarks>
@@ -131,14 +136,14 @@ public class TabbedConfigurationAddon<T, TU, TV, TW> : NativeAddon
                     Height = 26.0f,
                     InitialEntries = [
                         new TabBarEntry {
-                            TextId = 465,
+                            TextId = 465, // "Options"
                             SheetType = NodeData.SheetType.Addon,
                             OnClick = OnOptionsTabSelected,
                         },
                         new TabBarEntry {
-                            TextId = 662,
+                            TextId = 662, // "General"
                             SheetType = NodeData.SheetType.Addon,
-                            OnClick = OnGeneralTabSelected
+                            OnClick = OnGeneralTabSelected,
                         },
                     ],
                 },
@@ -160,7 +165,7 @@ public class TabbedConfigurationAddon<T, TU, TV, TW> : NativeAddon
                                     NavIndex = 1,
                                     NavDown = 2,
                                     NavUp = 100,
-                                    NavRight = 150,
+                                    NavRight = BodyNavIndex,
                                 },
                                 new ResNode { Height = 8.0f },
                                 OptionsListNode = new ListNode<T, TU> {
@@ -172,7 +177,7 @@ public class TabbedConfigurationAddon<T, TU, TV, TW> : NativeAddon
                                     NavIndex = 2,
                                     NavUp = 1,
                                     NavDown = 100,
-                                    NavRight = 150,
+                                    NavRight = BodyNavIndex,
                                 },
                                 new ResNode { Height = 8.0f },
                                 new HorizontalFlexNode {
@@ -199,7 +204,7 @@ public class TabbedConfigurationAddon<T, TU, TV, TW> : NativeAddon
                                             NavUp = 2,
                                             NavDown = 1,
                                             NavLeft = 100,
-                                            NavRight = 150,
+                                            NavRight = BodyNavIndex,
                                         },
                                     ],
                                 },

@@ -61,6 +61,11 @@ public class ConfigurationAddon<T, TU, TV> : NativeAddon where TV : EntryConfigu
     public Action<T>? RemoveClicked { get; set; }
 
     /// <summary>
+    /// The starting nav index for the body section of nodes next to the selection list.
+    /// </summary>
+    protected int BodyNavIndex { get; private set; } = 150;
+
+    /// <summary>
     /// Main layout container for this addon.
     /// </summary>
     /// <remarks>
@@ -133,7 +138,7 @@ public class ConfigurationAddon<T, TU, TV> : NativeAddon where TV : EntryConfigu
                             NavIndex = 1,
                             NavDown = 2,
                             NavUp = 100,
-                            NavRight = 150,
+                            NavRight = BodyNavIndex,
                         },
                         new ResNode { Height = 8.0f },
                         OptionsListNode = new ListNode<T, TU> {
@@ -145,7 +150,7 @@ public class ConfigurationAddon<T, TU, TV> : NativeAddon where TV : EntryConfigu
                             NavIndex = 2,
                             NavUp = 1,
                             NavDown = 100,
-                            NavRight = 150,
+                            NavRight = BodyNavIndex,
                         },
                         new ResNode { Height = 8.0f },
                         new HorizontalFlexNode {
@@ -172,7 +177,7 @@ public class ConfigurationAddon<T, TU, TV> : NativeAddon where TV : EntryConfigu
                                     NavUp = 2,
                                     NavDown = 1,
                                     NavLeft = 100,
-                                    NavRight = 150,
+                                    NavRight = BodyNavIndex,
                                 },
                             ],
                         },
