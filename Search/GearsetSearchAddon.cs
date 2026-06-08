@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Text.RegularExpressions;
 using FFXIVClientStructs.FFXIV.Client.UI.Misc;
-using KamiToolKit.Components.ListNodes;
+using KamiToolKit.Components.ListItemNodes;
 using Lumina.Text.ReadOnly;
 
 namespace KamiToolKit.Components.Search;

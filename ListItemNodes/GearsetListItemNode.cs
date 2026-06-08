@@ -6,7 +6,7 @@ using KamiToolKit.Classes;
 using KamiToolKit.Interfaces;
 using KamiToolKit.Nodes;
 
-namespace KamiToolKit.Components.ListNodes;
+namespace KamiToolKit.Components.ListItemNodes;
 
 /// <summary>
 /// Implementation of <see cref="ListItemNode{T}"/> for use with <see cref="Search.GearsetSearchAddon"/>

@@ -7,7 +7,7 @@ using KamiToolKit.Nodes;
 using Lumina.Excel.Sheets;
 using Lumina.Text.ReadOnly;
 
-namespace KamiToolKit.Components.ListNodes;
+namespace KamiToolKit.Components.ListItemNodes;
 
 /// <summary>
 /// Specialization of <see cref="ListItemNode{T}"/> for use with <see cref="ListNode{T,TU}"/> or <see cref="ItemSearchAddon"/>

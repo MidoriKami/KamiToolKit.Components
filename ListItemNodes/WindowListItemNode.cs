@@ -4,7 +4,7 @@ using FFXIVClientStructs.Interop;
 using KamiToolKit.Interfaces;
 using KamiToolKit.Nodes;
 
-namespace KamiToolKit.Components.ListNodes;
+namespace KamiToolKit.Components.ListItemNodes;
 
 /// <summary>
 /// Implementation of <see cref="ListItemNode{T}"/> for displaying a loaded <see cref="AtkUnitBase"/>
