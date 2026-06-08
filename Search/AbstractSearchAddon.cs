@@ -18,7 +18,7 @@ public class AbstractSearchAddon<T, TU> : NativeAddon where TU : ListItemNode<T>
     /// <summary>
     /// List of all available options.
     /// </summary>
-    public List<T> OptionsList {
+    public virtual List<T> OptionsList {
         get;
         set {
             field = value;
@@ -69,7 +69,9 @@ public class AbstractSearchAddon<T, TU> : NativeAddon where TU : ListItemNode<T>
     /// <summary>
     /// Function that is called for each letter input into the search.
     /// </summary>
-    protected virtual void OnSearchInputReceived(ReadOnlySeString searchString) { }
+    protected virtual void OnSearchInputReceived(ReadOnlySeString searchString) {
+        ResultsListNode?.ResetScroll();
+    }
 
     /// <summary>
     /// Function that is called when the OK button is clicked.
