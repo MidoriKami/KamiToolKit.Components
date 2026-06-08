@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using FFXIVClientStructs.FFXIV.Component.GUI;
 using FFXIVClientStructs.Interop;
 using KamiToolKit.Components.ListItemNodes;
+using KamiToolKit.Extensions;
 using Lumina.Text.ReadOnly;
 
 namespace KamiToolKit.Components.Search;
@@ -27,7 +27,7 @@ public class WindowSearchAddon : AbstractSearchAddon<Pointer<AtkUnitBase>, Windo
 
     /// <inheritdoc/>
     protected override unsafe void OnSearchInputReceived(ReadOnlySeString searchString) {
-        var searchRegex = new Regex(searchString.ToString(),  RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
+        var searchRegex = searchString.AsRegex();
 
         ResultsListNode?.OptionsList = OptionsList.Where(option => {
             if (option.Value is null) return false;

@@ -1,6 +1,6 @@
 ﻿using System.Linq;
-using System.Text.RegularExpressions;
 using KamiToolKit.Components.ListItemNodes;
+using KamiToolKit.Extensions;
 using Lumina.Excel.Sheets;
 using Lumina.Text.ReadOnly;
 
@@ -12,7 +12,7 @@ namespace KamiToolKit.Components.Search;
 /// </summary>
 public class ItemSearchAddon : AbstractSearchAddon<Item, ItemListItemNode> {
     protected override void OnSearchInputReceived(ReadOnlySeString searchString) {
-        var searchRegex = new Regex(searchString.ToString(),  RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
+        var searchRegex = searchString.AsRegex();
 
         ResultsListNode?.OptionsList = OptionsList.Where(option => {
             if (searchRegex.IsMatch(option.Name.ToString())) return true;
