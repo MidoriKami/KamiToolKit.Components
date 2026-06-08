@@ -43,6 +43,11 @@ public class ConfigurationAddon<T, TU, TV> : NativeAddon where TV : EntryConfigu
     public required Func<T, string> GetEntrySearchString { get; set; }
 
     /// <summary>
+    /// Callback that is invoked when the window has edited a config entry.
+    /// </summary>
+    public Action? SaveConfig { get; set; }
+
+    /// <summary>
     /// Callback that is invoked when the add button is clicked.
     /// </summary>
     public Action? AddClicked { get; set; }
@@ -176,6 +181,7 @@ public class ConfigurationAddon<T, TU, TV> : NativeAddon where TV : EntryConfigu
                 new VerticalLineNode { Width = 4.0f },
                 EntryConfigurationNode = new TV {
                     Width =  ContentSize.X * 6.0f / 10.0f - 5.0f,
+                    SaveConfig = SaveConfig,
                 },
             ],
         };

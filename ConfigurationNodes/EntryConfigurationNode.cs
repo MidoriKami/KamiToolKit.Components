@@ -1,4 +1,5 @@
-﻿using FFXIVClientStructs.FFXIV.Component.GUI;
+﻿using System;
+using FFXIVClientStructs.FFXIV.Component.GUI;
 using KamiToolKit.Nodes;
 using Lumina.Data.Parsing.Uld;
 
@@ -27,6 +28,11 @@ public abstract class EntryConfigurationNode<T> : ResNode where T : class {
             PopulateEntryData(entry);
         }
     }
+
+    /// <summary>
+    /// Callback adaptor to allow triggering a save when a entry is edited.
+    /// </summary>
+    public Action? SaveConfig { get; set; }
 
     /// <summary>
     /// Gets the text node that shows "Select an Item" when no item is selected.
