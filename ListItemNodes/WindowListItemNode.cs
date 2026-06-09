@@ -39,7 +39,9 @@ public class WindowListItemNode : ListItemWithFocusNav<Pointer<AtkUnitBase>>, IL
         };
         VisibilityIconNode.AttachNode(this);
 
-        AddonNameTextNode = new TextNode();
+        AddonNameTextNode = new TextNode {
+            TextFlags = TextFlags.Ellipsis | TextFlags.Emboss,
+        };
         AddonNameTextNode.AttachNode(this);
     }
 

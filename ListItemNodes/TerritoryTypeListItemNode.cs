@@ -70,14 +70,14 @@ public class TerritoryTypeListItemNode : ListItemWithFocusNav<TerritoryType>, IL
         TerritoryImageNode.AttachNode(this);
 
         TerritoryNameTextNode = new TextNode {
-            TextFlags = TextFlags.Ellipsis,
+            TextFlags = TextFlags.Ellipsis | TextFlags.Emboss,
             AlignmentType = AlignmentType.BottomLeft,
             String = "None Selected",
         };
         TerritoryNameTextNode.AttachNode(this);
 
         TerritoryDescriptionTextNode = new TextNode {
-            TextFlags = TextFlags.Ellipsis,
+            TextFlags = TextFlags.Ellipsis | TextFlags.Emboss,
             AlignmentType = AlignmentType.TopLeft,
             TextColor = ColorHelper.GetColor(2),
         };

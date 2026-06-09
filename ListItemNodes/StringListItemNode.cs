@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using FFXIVClientStructs.FFXIV.Component.GUI;
 using KamiToolKit.Interfaces;
 using KamiToolKit.Nodes;
 
@@ -22,7 +23,9 @@ public class StringListItemNode : ListItemWithFocusNav<string>, IListItemNode {
         => LabelTextNode.String = itemData;
 
     public StringListItemNode() {
-        LabelTextNode = new TextNode();
+        LabelTextNode = new TextNode {
+            TextFlags = TextFlags.Ellipsis | TextFlags.Emboss,
+        };
         LabelTextNode.AttachNode(this);
     }
 
