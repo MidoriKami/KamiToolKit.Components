@@ -58,6 +58,11 @@ public class TabbedConfigurationAddon<T, TU, TV, TW> : NativeAddon
     public Action<T>? RemoveClicked { get; set; }
 
     /// <summary>
+    /// Action that is called when the <see cref="EntryConfigurationNode"/> has changed data.
+    /// </summary>
+    public Action? SaveConfig { get; set; }
+
+    /// <summary>
     /// The starting nav index for the body section of nodes next to the selection list.
     /// </summary>
     protected int BodyNavIndex { get; private set; } = 150;
@@ -213,6 +218,7 @@ public class TabbedConfigurationAddon<T, TU, TV, TW> : NativeAddon
                         new VerticalLineNode { Width = 4.0f },
                         EntryConfigurationNode = new TV {
                             Width =  ContentSize.X * 6.0f / 10.0f - 5.0f,
+                            SaveConfig = SaveConfig,
                         },
                     ],
                 },
@@ -222,7 +228,7 @@ public class TabbedConfigurationAddon<T, TU, TV, TW> : NativeAddon
         LayoutContainer.AttachNode(this);
 
         GeneralConfigurationPage = new TW {
-            Position = OptionsConfigurationPage.Position,
+            Position = OptionsConfigurationPage.Position + LayoutContainer.Position,
             Size = OptionsConfigurationPage.Size,
             IsVisible = false,
         };
