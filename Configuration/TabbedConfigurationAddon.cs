@@ -233,12 +233,6 @@ public class TabbedConfigurationAddon<T, TU, TV, TW> : NativeAddon
             IsVisible = false,
         };
         GeneralConfigurationPage.AttachNode(this);
-
-        // Initialize all TextId properties for contained nodes.
-        addon->UldManager.SetupTextRecursive();
-
-        // The search node doesn't know that we just indirectly set its text value, inform it.
-        SearchInputNode.PlaceholderString = SearchInputNode.PlaceholderTextNode.String.ToString();
     }
 
     protected override unsafe void OnFinalize(AtkUnitBase* addon) {
