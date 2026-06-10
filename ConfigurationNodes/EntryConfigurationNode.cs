@@ -20,6 +20,8 @@ public abstract class EntryConfigurationNode<T> : ResNode where T : class {
         if (entry is null) {
             ConfigurationContentNode.IsVisible = false;
             SelectAnItemTextNode.IsVisible = true;
+
+            ClearEntryData();
         }
         else {
             ConfigurationContentNode.IsVisible = true;
@@ -48,6 +50,11 @@ public abstract class EntryConfigurationNode<T> : ResNode where T : class {
     /// Function that is called when this configuration node is representing a different entry.
     /// </summary>
     protected abstract void PopulateEntryData(T entry);
+
+    /// <summary>
+    /// Function that is called when this configuration node is reset/cleared/unselected.
+    /// </summary>
+    protected virtual void ClearEntryData() { }
 
     protected EntryConfigurationNode() {
         SelectAnItemTextNode = new TextNode {
