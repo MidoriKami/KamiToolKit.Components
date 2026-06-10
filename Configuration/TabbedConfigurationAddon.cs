@@ -36,6 +36,7 @@ public class TabbedConfigurationAddon<T, TU, TV, TW> : NativeAddon
         set {
             field = value;
             OptionsListNode?.OptionsList = value;
+            OptionsListNode?.ResetScroll();
         }
     } = [];
 
