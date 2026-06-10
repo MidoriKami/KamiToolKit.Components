@@ -36,7 +36,6 @@ public class TabbedConfigurationAddon<T, TU, TV, TW> : NativeAddon
         set {
             field = value;
             OptionsListNode?.OptionsList = value;
-            OptionsListNode?.ResetScroll();
         }
     } = [];
 
@@ -225,7 +224,6 @@ public class TabbedConfigurationAddon<T, TU, TV, TW> : NativeAddon
                 },
             ],
         };
-
         LayoutContainer.AttachNode(this);
 
         GeneralConfigurationPage = new TW {
