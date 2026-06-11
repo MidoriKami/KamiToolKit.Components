@@ -21,6 +21,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="KamiToolKit" Version="*" />
+      <ProjectReference Include="..\KamiToolKit\KamiToolKit.csproj" />
     </ItemGroup>
 </Project>
