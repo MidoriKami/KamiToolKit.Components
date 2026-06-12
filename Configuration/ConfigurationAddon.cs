@@ -195,12 +195,12 @@ public class ConfigurationAddon<T, TU, TV> : NativeAddon where TV : EntryConfigu
     }
 
     protected override unsafe void OnFinalize(AtkUnitBase* addon) {
+        base.OnFinalize(addon);
+
         LayoutContainer = null;
         SearchInputNode = null;
         OptionsListNode = null;
         RemoveButtonNode = null;
-
-        base.OnFinalize(addon);
     }
 
     private void OnSearchInputReceived(ReadOnlySeString searchString) {
