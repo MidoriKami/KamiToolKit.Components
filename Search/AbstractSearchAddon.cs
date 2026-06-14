@@ -102,10 +102,8 @@ public class AbstractSearchAddon<T, TU> : NativeAddon where TU : ListItemNode<T>
             FitWidth = true,
 
             InitialNodes = [
-                SearchInputNode = new TextInputNode {
+                SearchInputNode = new SearchInputNode {
                     Height = 26.0f,
-                    PlaceholderStringId = 325, // "Search"
-                    SheetType = NodeData.SheetType.Addon,
                     OnInputReceived = OnSearchInputReceived,
                     OnInputComplete = OnSearchInputComplete,
                     NavIndex = 1,

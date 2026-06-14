@@ -130,10 +130,8 @@ public class ConfigurationAddon<T, TU, TV> : NativeAddon where TV : EntryConfigu
                     Width = ContentSize.X * 4.0f / 10.0f - 5.0f,
                     FitWidth = true,
                     InitialNodes = [
-                        SearchInputNode = new TextInputNode {
+                        SearchInputNode = new SearchInputNode {
                             Height = 26.0f,
-                            PlaceholderStringId = 325, // "Search"
-                            SheetType = NodeData.SheetType.Addon,
                             OnInputReceived = OnSearchInputReceived,
                             NavIndex = 1,
                             NavDown = 2,
