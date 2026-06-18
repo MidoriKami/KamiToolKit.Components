@@ -20,7 +20,11 @@
         <ProjectReference Include="..\FFXIVClientStructs\InteropGenerator.Runtime\InteropGenerator.Runtime.csproj" Private="True" />
     </ItemGroup>
 
-    <ItemGroup>
+    <ItemGroup Condition="Exists('..\KamiToolKit')">
+      <ProjectReference Include="..\KamiToolKit\KamiToolKit.csproj" />
+    </ItemGroup>
+
+    <ItemGroup Condition="!Exists('..\KamiToolKit')">
         <PackageReference Include="KamiToolKit" Version="*" />
     </ItemGroup>
 </Project>
