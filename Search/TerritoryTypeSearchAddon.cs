@@ -10,6 +10,8 @@ namespace KamiToolKit.Components.Search;
 /// Implementation of <see cref="AbstractSearchAddon{T,TU}"/> for use with TerritoryType lumina row entries.
 /// </summary>
 public class TerritoryTypeSearchAddon : AbstractSearchAddon<TerritoryType, TerritoryTypeListItemNode> {
+
+    /// <inheritdoc />
     protected override void OnSearchInputReceived(ReadOnlySeString searchString) {
         var searchRegex = searchString.AsRegex();
 

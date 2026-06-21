@@ -70,6 +70,9 @@ public class ItemListItemNode : ListItemWithFocusNav<Item>, IListItemNode {
         ItemIdTextNode.IsVisible = true;
     }
 
+    /// <summary>
+    /// Constructs a new <see cref="ItemListItemNode"/>
+    /// </summary>
     public ItemListItemNode() {
         ItemIconImageNode = new IconImageNode {
             FitTexture = true,
@@ -102,6 +105,7 @@ public class ItemListItemNode : ListItemWithFocusNav<Item>, IListItemNode {
         ItemIdTextNode.AttachNode(this);
     }
 
+    /// <inheritdoc />
     protected override void OnSizeChanged() {
         base.OnSizeChanged();
 
@@ -118,6 +122,7 @@ public class ItemListItemNode : ListItemWithFocusNav<Item>, IListItemNode {
         ItemCategoryTextNode.Position = ItemNameTextNode.Position with { Y = Height / 2.0f };
     }
 
+    /// <inheritdoc />
     protected override void OnNavHoverStart() {
         base.OnNavHoverStart();
 
@@ -126,6 +131,7 @@ public class ItemListItemNode : ListItemWithFocusNav<Item>, IListItemNode {
         }
     }
 
+    /// <inheritdoc />
     protected override void OnNavHoverEnd() {
         base.OnNavHoverEnd();
 

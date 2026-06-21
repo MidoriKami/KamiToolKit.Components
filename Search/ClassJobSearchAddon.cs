@@ -10,6 +10,8 @@ namespace KamiToolKit.Components.Search;
 /// Implementation of <see cref="AbstractSearchAddon{T,TU}"/> to implement a ClassJob search.
 /// </summary>
 public class ClassJobSearchAddon : AbstractSearchAddon<ClassJob, ClassJobListItemNode> {
+
+    /// <inheritdoc />
     protected override void OnSearchInputReceived(ReadOnlySeString searchString) {
         var searchRegex = searchString.AsRegex();
 

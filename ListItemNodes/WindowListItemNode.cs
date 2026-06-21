@@ -32,6 +32,9 @@ public class WindowListItemNode : ListItemWithFocusNav<Pointer<AtkUnitBase>>, IL
         AddonNameTextNode.String = itemData.Value->NameString;
     }
 
+    /// <summary>
+    /// Constructs a new <see cref="WindowListItemNode"/>
+    /// </summary>
     public WindowListItemNode() {
         VisibilityIconNode = new IconImageNode {
             FitTexture = true,
@@ -45,6 +48,7 @@ public class WindowListItemNode : ListItemWithFocusNav<Pointer<AtkUnitBase>>, IL
         AddonNameTextNode.AttachNode(this);
     }
 
+    /// <inheritdoc />
     protected override void OnSizeChanged() {
         base.OnSizeChanged();
 

@@ -129,6 +129,7 @@ public class TabbedConfigurationAddon<T, TU, TV, TW> : NativeAddon
         }
     }
 
+    /// <inheritdoc />
     protected override unsafe void OnSetup(AtkUnitBase* addon, Span<AtkValue> atkValueSpan) {
         base.OnSetup(addon, atkValueSpan);
 
@@ -232,6 +233,7 @@ public class TabbedConfigurationAddon<T, TU, TV, TW> : NativeAddon
         GeneralConfigurationPage.AttachNode(this);
     }
 
+    /// <inheritdoc />
     protected override unsafe void OnFinalize(AtkUnitBase* addon) {
         LayoutContainer = null;
         SearchInputNode = null;

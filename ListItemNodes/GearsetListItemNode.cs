@@ -61,6 +61,9 @@ public class GearsetListItemNode : ListItemWithFocusNav<RaptureGearsetModule.Gea
         GearsetIndexTextNode.IsVisible = true;
     }
 
+    /// <summary>
+    /// Constructs a new <see cref="GearsetListItemNode"/>
+    /// </summary>
     public GearsetListItemNode() {
         ItemIconImageNode = new IconImageNode {
             FitTexture = true,
@@ -92,6 +95,7 @@ public class GearsetListItemNode : ListItemWithFocusNav<RaptureGearsetModule.Gea
         GearsetIndexTextNode.AttachNode(this);
     }
 
+    /// <inheritdoc />
     protected override void OnSizeChanged() {
         base.OnSizeChanged();
 

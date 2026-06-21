@@ -62,6 +62,9 @@ public class TerritoryTypeListItemNode : ListItemWithFocusNav<TerritoryType>, IL
         }
     }
 
+    /// <summary>
+    /// Constructs a new <see cref="TerritoryTypeListItemNode"/>
+    /// </summary>
     public TerritoryTypeListItemNode() {
         TerritoryImageNode = new SimpleImageNode {
             FitTexture = true,
@@ -92,6 +95,7 @@ public class TerritoryTypeListItemNode : ListItemWithFocusNav<TerritoryType>, IL
         KamiToolKitLibrary.PluginInterface.Inject(this);
     }
 
+    /// <inheritdoc />
     protected override void OnSizeChanged() {
         base.OnSizeChanged();
 

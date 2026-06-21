@@ -90,6 +90,7 @@ public class AbstractSearchAddon<T, TU> : NativeAddon where TU : ListItemNode<T>
         Close();
     }
 
+    /// <inheritdoc />
     protected override unsafe void OnSetup(AtkUnitBase* addon, Span<AtkValue> atkValueSpan) {
         base.OnSetup(addon, atkValueSpan);
 
@@ -154,6 +155,7 @@ public class AbstractSearchAddon<T, TU> : NativeAddon where TU : ListItemNode<T>
         LayoutContainer.AttachNode(this);
     }
 
+    /// <inheritdoc />
     protected override unsafe void OnFinalize(AtkUnitBase* addon) {
         LayoutContainer = null;
         SearchInputNode = null;

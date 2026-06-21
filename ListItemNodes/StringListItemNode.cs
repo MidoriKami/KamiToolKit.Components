@@ -22,6 +22,9 @@ public class StringListItemNode : ListItemWithFocusNav<string>, IListItemNode {
     protected override void SetNodeData(string itemData)
         => LabelTextNode.String = itemData;
 
+    /// <summary>
+    /// Constructs a new <see cref="StringListItemNode"/>
+    /// </summary>
     public StringListItemNode() {
         LabelTextNode = new TextNode {
             TextFlags = TextFlags.Ellipsis | TextFlags.Emboss,
@@ -29,6 +32,7 @@ public class StringListItemNode : ListItemWithFocusNav<string>, IListItemNode {
         LabelTextNode.AttachNode(this);
     }
 
+    /// <inheritdoc />
     protected override void OnSizeChanged() {
         base.OnSizeChanged();
 

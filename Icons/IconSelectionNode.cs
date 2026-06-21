@@ -42,6 +42,9 @@ public class IconSelectionNode : ResNode {
     /// </summary>
     public NumericInputNode IconIdInputNode { get; }
 
+    /// <summary>
+    /// Constructs a new <see cref="IconSelectionNode"/>
+    /// </summary>
     public IconSelectionNode(List<uint> iconOptions) {
         IconButtonListNode = new HorizontalListNode();
         IconButtonListNode.AttachNode(this);
@@ -68,6 +71,7 @@ public class IconSelectionNode : ResNode {
         IconIdInputNode.AttachNode(this);
     }
 
+    /// <inheritdoc />
     protected override void OnSizeChanged() {
         base.OnSizeChanged();
 

@@ -117,6 +117,7 @@ public class ConfigurationAddon<T, TU, TV> : NativeAddon where TV : EntryConfigu
         }
     }
 
+    /// <inheritdoc />
     protected override unsafe void OnSetup(AtkUnitBase* addon, Span<AtkValue> atkValueSpan) {
         base.OnSetup(addon, atkValueSpan);
 
@@ -192,6 +193,7 @@ public class ConfigurationAddon<T, TU, TV> : NativeAddon where TV : EntryConfigu
         LayoutContainer.AttachNode(this);
     }
 
+    /// <inheritdoc />
     protected override unsafe void OnFinalize(AtkUnitBase* addon) {
         base.OnFinalize(addon);
 

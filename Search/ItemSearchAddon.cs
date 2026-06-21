@@ -11,6 +11,8 @@ namespace KamiToolKit.Components.Search;
 /// with icons and item information.
 /// </summary>
 public class ItemSearchAddon : AbstractSearchAddon<Item, ItemListItemNode> {
+
+    /// <inheritdoc />
     protected override void OnSearchInputReceived(ReadOnlySeString searchString) {
         var searchRegex = searchString.AsRegex();
 

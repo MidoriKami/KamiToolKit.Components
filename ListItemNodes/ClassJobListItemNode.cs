@@ -62,6 +62,9 @@ public class ClassJobListItemNode : ListItemWithFocusNav<ClassJob>, IListItemNod
         ClassJobIdTextNode.IsVisible = true;
     }
 
+    /// <summary>
+    /// Constructs a new <see cref="ClassJobListItemNode"/>
+    /// </summary>
     public ClassJobListItemNode() {
         ClassJobIconImageNode = new IconImageNode {
             FitTexture = true,
@@ -95,6 +98,7 @@ public class ClassJobListItemNode : ListItemWithFocusNav<ClassJob>, IListItemNod
         KamiToolKitLibrary.PluginInterface.Inject(this);
     }
 
+    /// <inheritdoc />
     protected override void OnSizeChanged() {
         base.OnSizeChanged();
 

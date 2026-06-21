@@ -14,6 +14,7 @@ namespace KamiToolKit.Components.Search;
 /// </summary>
 public class GearsetSearchAddon : AbstractSearchAddon<RaptureGearsetModule.GearsetEntry, GearsetListItemNode> {
 
+    /// <inheritdoc />
     protected override unsafe void OnSetup(AtkUnitBase* addon, Span<AtkValue> atkValueSpan) {
         OptionsList = RaptureGearsetModule.Instance()->Entries
             .ToArray()
@@ -24,6 +25,7 @@ public class GearsetSearchAddon : AbstractSearchAddon<RaptureGearsetModule.Gears
         base.OnSetup(addon, atkValueSpan);
     }
 
+    /// <inheritdoc />
     protected override void OnSearchInputReceived(ReadOnlySeString searchString) {
         var searchRegex = searchString.AsRegex();
 

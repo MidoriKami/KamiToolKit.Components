@@ -56,6 +56,9 @@ public abstract class EntryConfigurationNode<T> : ResNode where T : class {
     /// </summary>
     protected virtual void ClearEntryData() { }
 
+    /// <summary>
+    /// Constructs a new <see cref="EntryConfigurationNode{T}"/>
+    /// </summary>
     protected EntryConfigurationNode() {
         SelectAnItemTextNode = new TextNode {
             TextId = 1818,
@@ -70,6 +73,7 @@ public abstract class EntryConfigurationNode<T> : ResNode where T : class {
         ConfigurationContentNode.AttachNode(this);
     }
 
+    /// <inheritdoc />
     protected override void OnSizeChanged() {
         base.OnSizeChanged();
 
