@@ -1,8 +1,8 @@
 ﻿using System.Numerics;
-using Dalamud.IoC;
 using Dalamud.Plugin.Services;
 using FFXIVClientStructs.FFXIV.Component.GUI;
 using KamiToolKit.Classes;
+using KamiToolKit.Components.Internal;
 using KamiToolKit.Interfaces;
 using KamiToolKit.Nodes;
 using KamiToolKit.Nodes.Simplified;
@@ -58,7 +58,7 @@ public class TerritoryTypeListItemNode : ListItemWithFocusNav<TerritoryType>, IL
         }
         else {
             var cfcRow = itemData.ContentFinderCondition.Value.RowId;
-            TerritoryDescriptionTextNode.String = SeStringEvaluator.EvaluateFromAddon(9781, [cfcRow]);
+            TerritoryDescriptionTextNode.String = ISeStringEvaluator.Get().EvaluateFromAddon(9781, [cfcRow]);
         }
     }
 
@@ -111,6 +111,4 @@ public class TerritoryTypeListItemNode : ListItemWithFocusNav<TerritoryType>, IL
         TerritoryDescriptionTextNode.Size = TerritoryNameTextNode.Size;
         TerritoryDescriptionTextNode.Position = new Vector2(TerritoryNameTextNode.Bounds.Left, Height / 2.0f);
     }
-
-    [PluginService] private ISeStringEvaluator SeStringEvaluator { get; set; } = null!;
 }

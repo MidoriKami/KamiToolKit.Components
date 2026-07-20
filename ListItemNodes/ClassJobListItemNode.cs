@@ -1,8 +1,8 @@
 ﻿using System.Numerics;
-using Dalamud.IoC;
 using Dalamud.Plugin.Services;
 using FFXIVClientStructs.FFXIV.Component.GUI;
 using KamiToolKit.Classes;
+using KamiToolKit.Components.Internal;
 using KamiToolKit.Interfaces;
 using KamiToolKit.Nodes;
 using Lumina.Excel.Sheets;
@@ -52,7 +52,7 @@ public class ClassJobListItemNode : ListItemWithFocusNav<ClassJob>, IListItemNod
         ClassJobIconImageNode.IconId = itemData.RowId + 62000;
         ClassJobIconImageNode.IsVisible = true;
 
-        ClassJobNameTextNode.String = SeStringEvaluator.EvaluateFromAddon(698, [itemData.RowId]);
+        ClassJobNameTextNode.String = ISeStringEvaluator.Get().EvaluateFromAddon(698, [itemData.RowId]);
         ClassJobNameTextNode.IsVisible = true;
 
         ClassJobAbbreviationTextNode.String = itemData.Abbreviation;
@@ -114,6 +114,4 @@ public class ClassJobListItemNode : ListItemWithFocusNav<ClassJob>, IListItemNod
         ClassJobAbbreviationTextNode.Size = ClassJobNameTextNode.Size;
         ClassJobAbbreviationTextNode.Position = ClassJobNameTextNode.Position with { Y = Height / 2.0f };
     }
-
-    [PluginService] private ISeStringEvaluator SeStringEvaluator { get; set; } = null!;
 }
