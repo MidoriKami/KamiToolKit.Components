@@ -194,6 +194,13 @@ public class ConfigurationAddon<T, TU, TV> : NativeAddon where TV : EntryConfigu
     }
 
     /// <inheritdoc />
+    protected override unsafe void OnUpdate(AtkUnitBase* addon) {
+        base.OnUpdate(addon);
+
+        OptionsListNode?.Update();
+    }
+
+    /// <inheritdoc />
     protected override unsafe void OnFinalize(AtkUnitBase* addon) {
         base.OnFinalize(addon);
 
