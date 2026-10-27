@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using KamiToolKit.Components.ListItemNodes;
 using KamiToolKit.Extensions;
-using Lumina.Excel.Sheets;
+using Dalamud.Excel.Sheets;
 using Lumina.Text.ReadOnly;
 
 namespace KamiToolKit.Components.Search;

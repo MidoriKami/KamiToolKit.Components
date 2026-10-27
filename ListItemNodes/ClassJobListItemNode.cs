@@ -5,7 +5,7 @@ using KamiToolKit.Classes;
 using KamiToolKit.Components.Internal;
 using KamiToolKit.Interfaces;
 using KamiToolKit.Nodes;
-using Lumina.Excel.Sheets;
+using Dalamud.Excel.Sheets;
 
 namespace KamiToolKit.Components.ListItemNodes;
 
