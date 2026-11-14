@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -35,7 +35,7 @@ public class TabbedConfigurationAddon<T, TU, TV, TW> : NativeAddon
         get;
         set {
             field = value;
-            OptionsListNode?.OptionsList = value;
+            OptionsListNode?.Options = value;
         }
     } = [];
 
@@ -136,7 +136,7 @@ public class TabbedConfigurationAddon<T, TU, TV, TW> : NativeAddon
         LayoutContainer = new VerticalListNode {
             Position = ContentStartPosition,
             Size = ContentSize,
-            FitWidth = true,
+            StretchWidth = true,
             InitialNodes = [
                 new TabBarNode {
                     Height = 26.0f,
@@ -161,7 +161,7 @@ public class TabbedConfigurationAddon<T, TU, TV, TW> : NativeAddon
                     InitialNodes = [
                         new VerticalListNode {
                             Width = ContentSize.X * 4.0f / 10.0f - 5.0f,
-                            FitWidth = true,
+                            StretchWidth = true,
                             InitialNodes = [
                                 SearchInputNode = new SearchInputNode {
                                     Height = 26.0f,
@@ -176,8 +176,8 @@ public class TabbedConfigurationAddon<T, TU, TV, TW> : NativeAddon
                                     Height = ContentSize.Y - 26.0f - 26.0f - 26.0f - 16.0f - 8.0f,
                                     AllowMultipleSelection = false,
                                     ItemSpacing = 2.0f,
-                                    OptionsList = OptionsList,
-                                    OnItemSelected = OnEntrySelected,
+                                    Options = OptionsList,
+                                    OnOptionSelected = OnEntrySelected,
                                     NavIndex = 2,
                                     NavUp = 1,
                                     NavDown = 100,
@@ -247,7 +247,7 @@ public class TabbedConfigurationAddon<T, TU, TV, TW> : NativeAddon
         try {
             var searchRegex = new Regex(searchString.ToString(),  RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
 
-            OptionsListNode?.OptionsList = OptionsList.Where(option => searchRegex.IsMatch(GetEntrySearchString(option))).ToList();
+            OptionsListNode?.Options = OptionsList.Where(option => searchRegex.IsMatch(GetEntrySearchString(option))).ToList();
             OnEntrySelected(null);
         }
         catch (RegexParseException) { }

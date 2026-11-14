@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using KamiToolKit.Components.ListItemNodes;
 using KamiToolKit.Extensions;
 using Dalamud.Excel.Sheets;
@@ -15,7 +15,7 @@ public class ClassJobSearchAddon : AbstractSearchAddon<ClassJob, ClassJobListIte
     protected override void OnSearchInputReceived(ReadOnlySeString searchString) {
         var searchRegex = searchString.AsRegex();
 
-        ResultsListNode?.OptionsList = OptionsList.Where(option => {
+        ResultsListNode?.Options = OptionsList.Where(option => {
             if (searchRegex.IsMatch(option.Name.ToString())) return true;
             if (searchRegex.IsMatch(option.Abbreviation.ToString())) return true;
 

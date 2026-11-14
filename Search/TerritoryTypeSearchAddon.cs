@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using KamiToolKit.Components.ListItemNodes;
 using KamiToolKit.Extensions;
 using Dalamud.Excel.Sheets;
@@ -15,7 +15,7 @@ public class TerritoryTypeSearchAddon : AbstractSearchAddon<TerritoryType, Terri
     protected override void OnSearchInputReceived(ReadOnlySeString searchString) {
         var searchRegex = searchString.AsRegex();
 
-        ResultsListNode?.OptionsList = OptionsList.Where(option => {
+        ResultsListNode?.Options = OptionsList.Where(option => {
             var placeName = option.PlaceName.ValueNullable?.Name.ToString();
             if (placeName is not null && searchRegex.IsMatch(placeName)) return true;
 

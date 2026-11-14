@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using KamiToolKit.Components.ListItemNodes;
 using KamiToolKit.Extensions;
 using Lumina.Text.ReadOnly;
@@ -14,7 +14,7 @@ public class StringSearchAddon : AbstractSearchAddon<string, StringListItemNode>
     protected override void OnSearchInputReceived(ReadOnlySeString searchString) {
         var searchRegex = searchString.AsRegex();
 
-        ResultsListNode?.OptionsList = OptionsList.Where(option => searchRegex.IsMatch(option)).ToList();
+        ResultsListNode?.Options = OptionsList.Where(option => searchRegex.IsMatch(option)).ToList();
 
         base.OnSearchInputReceived(searchString);
     }

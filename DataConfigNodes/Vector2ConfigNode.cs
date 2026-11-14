@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Numerics;
 using FFXIVClientStructs.FFXIV.Component.GUI;
 using KamiToolKit.Enums;
@@ -127,7 +127,7 @@ public class Vector2ConfigNode : ResNode {
     /// </summary>
     public Vector2ConfigNode() {
         LayoutNode = new VerticalListNode {
-            FitWidth = true,
+            StretchWidth = true,
             InitialNodes = [
                 new HorizontalFlexNode {
                     Height = 22.0f,

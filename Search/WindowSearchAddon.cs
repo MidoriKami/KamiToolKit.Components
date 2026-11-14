@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using FFXIVClientStructs.FFXIV.Component.GUI;
 using FFXIVClientStructs.Interop;
@@ -29,7 +29,7 @@ public class WindowSearchAddon : AbstractSearchAddon<Pointer<AtkUnitBase>, Windo
     protected override unsafe void OnSearchInputReceived(ReadOnlySeString searchString) {
         var searchRegex = searchString.AsRegex();
 
-        ResultsListNode?.OptionsList = OptionsList.Where(option => {
+        ResultsListNode?.Options = OptionsList.Where(option => {
             if (option.Value is null) return false;
             if (searchRegex.IsMatch(option.Value->NameString)) return true;
 

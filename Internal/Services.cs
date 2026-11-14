@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Dalamud.Plugin.Services;
 
 namespace KamiToolKit.Components.Internal;

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -33,7 +33,7 @@ public class ConfigurationAddon<T, TU, TV> : NativeAddon where TV : EntryConfigu
         get;
         set {
             field = value;
-            OptionsListNode?.OptionsList = value;
+            OptionsListNode?.Options = value;
         }
     } = [];
 
@@ -129,7 +129,7 @@ public class ConfigurationAddon<T, TU, TV> : NativeAddon where TV : EntryConfigu
             InitialNodes = [
                 new VerticalListNode {
                     Width = ContentSize.X * 4.0f / 10.0f - 5.0f,
-                    FitWidth = true,
+                    StretchWidth = true,
                     InitialNodes = [
                         SearchInputNode = new SearchInputNode {
                             Height = 26.0f,
@@ -144,8 +144,8 @@ public class ConfigurationAddon<T, TU, TV> : NativeAddon where TV : EntryConfigu
                             Height = ContentSize.Y - 26.0f - 26.0f - 16.0f,
                             AllowMultipleSelection = false,
                             ItemSpacing = 2.0f,
-                            OptionsList = OptionsList,
-                            OnItemSelected = OnEntrySelected,
+                            Options = OptionsList,
+                            OnOptionSelected = OnEntrySelected,
                             NavIndex = 2,
                             NavUp = 1,
                             NavDown = 100,
@@ -214,7 +214,7 @@ public class ConfigurationAddon<T, TU, TV> : NativeAddon where TV : EntryConfigu
         try {
             var searchRegex = new Regex(searchString.ToString(),  RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
 
-            OptionsListNode?.OptionsList = OptionsList.Where(option => searchRegex.IsMatch(GetEntrySearchString(option))).ToList();
+            OptionsListNode?.Options = OptionsList.Where(option => searchRegex.IsMatch(GetEntrySearchString(option))).ToList();
             OnEntrySelected(null);
         }
         catch (RegexParseException) { }
