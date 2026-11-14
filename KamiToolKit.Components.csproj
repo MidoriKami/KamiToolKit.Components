@@ -1,7 +1,6 @@
 <Project Sdk="Dalamud.NET.Sdk/15.0.0">
     <!-- Project settings -->
     <PropertyGroup>
-        <LangVersion>preview</LangVersion>
         <RestorePackagesWithLockFile>false</RestorePackagesWithLockFile>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
     </PropertyGroup>
@@ -37,5 +36,9 @@
 
     <ItemGroup Condition="!Exists('..\KamiToolKit')">
         <PackageReference Include="KamiToolKit" Version="*" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="Builders\OverlappingAreasBuilder.cs" />
     </ItemGroup>
 </Project>

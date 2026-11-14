@@ -689,7 +689,7 @@ public class NodeBuilder<T> where T : NodeBase, new() {
         => RatioSplit(ratios, out _, null, sectionBuildActions);
 
     /// <summary>
-    /// Adds a two-string display node for displaying a label and a updatable value.
+    /// Adds a two-string display node for displaying a label and an updatable value.
     /// </summary>
     public NodeBuilder<T> DataRow(ReadOnlySeString label, ReadOnlySeString initialValue, out TextNode valueNode, float[]? ratios = null, Action<IRatioSplitNode>? configureSplit = null) {
         TextNode localValueNode = null!;
@@ -784,6 +784,37 @@ public class NodeBuilder<T> where T : NodeBase, new() {
     /// </summary>
     public NodeBuilder<T> TabbedContent(Action<TabbedContentBuilder> buildTabs, Action<ITabbedContentNode>? configure = null, Action? tabChanged = null)
         => TabbedContent(buildTabs, out _, configure, tabChanged);
+
+    /// <summary>
+    /// Adds a layout node that will fit all its children to itself.
+    /// </summary>
+    /// <remarks>
+    /// Intended to be used for cases where you want multiple nodes that may or may not be visible at any given time.
+    /// </remarks>
+    public NodeBuilder<T> FittedContent(Action<NodeBuilder> buildInner, out FittedContentNode node, Action<LayoutListNode>? configure = null) {
+        var innerBuilder = new NodeBuilder();
+        buildInner(innerBuilder);
+
+        node = new FittedContentNode();
+
+        foreach (var child in innerBuilder.ChildNodes) {
+            node.AddNode(child);
+        }
+
+        configure?.Invoke(node);
+        node.RecalculateLayout();
+
+        return AddNode(node);
+    }
+
+    /// <summary>
+    /// Adds a layout node that will fit all its children to itself.
+    /// </summary>
+    /// <remarks>
+    /// Intended to be used for cases where you want multiple nodes that may or may not be visible at any given time.
+    /// </remarks>
+    public NodeBuilder<T> FittedContent(Action<NodeBuilder> buildInner, Action<LayoutListNode>? configure = null)
+        => FittedContent(buildInner, out _, configure);
 
     /// <summary>
     /// Adds a nested <see cref="VerticalListNode"/> container.
