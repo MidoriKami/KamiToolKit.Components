@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
+using System.Drawing;
 using System.Numerics;
+using Dalamud.Interface;
 using Dalamud.Interface.Textures.TextureWraps;
 using FFXIVClientStructs.FFXIV.Component.GUI;
 using KamiToolKit.BaseTypes;
@@ -205,6 +206,28 @@ public class NodeBuilder {
     /// </summary>
     public NodeBuilder TextWrapped(ReadOnlySeString label, Action<ITextNode>? configure = null)
         => TextWrapped(label, out _, configure);
+
+    /// <summary>
+    /// Adds a <see cref="TextNode"/> that will fill the current content area.
+    /// </summary>
+    public NodeBuilder TextFilled(ReadOnlySeString label, out TextNode node, Action<ITextNode>? configure = null) {
+        node = new TextNode {
+            Size = new Vector2(100.0f, 24.0f),
+            String = label,
+            LayoutFill = LayoutFill.Both,
+            AlignmentType = AlignmentType.Center,
+        };
+
+        configure?.Invoke(node);
+
+        return AddNode(node);
+    }
+
+    /// <summary>
+    /// Adds a <see cref="TextNode"/> that will fill the current content area.
+    /// </summary>
+    public NodeBuilder TextFilled(ReadOnlySeString label, Action<ITextNode>? configure = null)
+        => Text(label, out _, configure);
 
     /// <summary>
     /// Adds a <see cref="CheckboxNode"/>.
@@ -636,26 +659,7 @@ public class NodeBuilder {
         foreach (var buildAction in sectionBuildActions) {
             var innerBuilder = new NodeBuilder();
             buildAction(innerBuilder);
-
-            // If we only added one node to this builder, add it directly.
-            if (innerBuilder.Node.Nodes.Count is 1) {
-                innerBuilder.Node.Dispose();
-                node.AddNode(innerBuilder.Node.Nodes.First());
-            }
-
-            // else attach them all inside a vertical list.
-            else if (innerBuilder.Node.Nodes.Count > 1) {
-                var layoutNode = innerBuilder.Node;
-
-                layoutNode.FitContents = true;
-                layoutNode.StretchWidth = true;
-                node.AddNode(layoutNode);
-            }
-
-            // Something went wrong.
-            else {
-                innerBuilder.Node.Dispose();
-            }
+            node.AddNode(innerBuilder.Node);
         }
 
         configure?.Invoke(node);
@@ -786,6 +790,11 @@ public class NodeBuilder {
         node = new FittedContentNode();
 
         foreach (var child in innerBuilder.Node.Nodes) {
+
+            // When the user built this node with buildInner, it attached the node to
+            // the builders vertical list, detach it, so we can attach to fitted content node instead.
+            child.DetachNode();
+
             node.AddNode(child);
         }
 
@@ -854,4 +863,40 @@ public class NodeBuilder {
     public NodeBuilder HorizontalList(Action<NodeBuilder> buildInner, Action<HorizontalListNode>? configure = null)
         => HorizontalList(buildInner, out _, configure);
 
+    /// <summary>
+    /// Adds a <see cref="ColorEditNode"/> for picking a Vector4 color.
+    /// </summary>
+    public NodeBuilder ColorEdit4(ReadOnlySeString label, Vector4 value, Vector4? defaultValue, Action<Vector4> onColorConfirmed, out ColorEditNode node, Action<Vector4>? onColorPreviewed = null, Action? onColorCancelled = null, Action<IColorEditNode>? configure = null) {
+        node = new ColorEditNode {
+            Size = new Vector2(100.0f, 24.0f),
+            String = label,
+            CurrentColor = value,
+            DefaultColor = defaultValue,
+            OnColorConfirmed = onColorConfirmed,
+            OnColorPreviewed = onColorPreviewed,
+            OnColorCancelled = onColorCancelled,
+        };
+
+        configure?.Invoke(node);
+
+        return AddNode(node);
+    }
+
+    /// <summary>
+    /// Adds a <see cref="ColorEditNode"/> for picking a Vector4 color.
+    /// </summary>
+    public NodeBuilder ColorEdit4(ReadOnlySeString label, Vector4 value, Vector4? defaultValue, Action<Vector4> onColorConfirmed, Action<Vector4>? onColorPreviewed = null, Action? onColorCancelled = null, Action<IColorEditNode>? configure = null)
+        => ColorEdit4(label, value, defaultValue, onColorConfirmed, out _, onColorPreviewed, onColorCancelled, configure);
+
+    /// <summary>
+    /// Adds a <see cref="ColorEditNode"/> for picking a Vector4 color with a KnownColor default.
+    /// </summary>
+    public NodeBuilder ColorEdit4(ReadOnlySeString label, Vector4 value, KnownColor defaultColor, Action<Vector4> onColorConfirmed, out ColorEditNode node, Action<Vector4>? onColorPreviewed = null, Action? onColorCancelled = null, Action<IColorEditNode>? configure = null)
+        => ColorEdit4(label, value, defaultColor.Vector(), onColorConfirmed, out node, onColorPreviewed, onColorCancelled, configure);
+
+    /// <summary>
+    /// Adds a <see cref="ColorEditNode"/> for picking a Vector4 color with a KnownColor default.
+    /// </summary>
+    public NodeBuilder ColorEdit4(ReadOnlySeString label, Vector4 value, KnownColor defaultColor, Action<Vector4> onColorConfirmed, Action<Vector4>? onColorPreviewed = null, Action? onColorCancelled = null, Action<IColorEditNode>? configure = null)
+        => ColorEdit4(label, value, defaultColor, onColorConfirmed, out _, onColorPreviewed, onColorCancelled, configure);
 }
