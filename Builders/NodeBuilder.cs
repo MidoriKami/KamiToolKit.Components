@@ -187,13 +187,12 @@ public class NodeBuilder {
     /// Adds a <see cref="TextNode"/> with label text.
     /// With params to wordwrap.
     /// </summary>
-    public NodeBuilder TextWrapped(ReadOnlySeString label, out TextNode node, Action<ITextNode>? configure = null) {
+    public NodeBuilder TextWrapped(ReadOnlySeString label, int lineCount, out TextNode node, Action<ITextNode>? configure = null) {
         node = new TextNode {
-            Size = new Vector2(100.0f, 24.0f),
+            Size = new Vector2(100.0f, 16.0f * lineCount),
             TextFlags = TextFlags.WordWrap | TextFlags.MultiLine,
             LineSpacing = 14,
             String = label,
-            AutoFitTextHeight = true,
         };
 
         configure?.Invoke(node);
@@ -205,8 +204,8 @@ public class NodeBuilder {
     /// Adds a <see cref="TextNode"/> with label text.
     /// With params to wordwrap.
     /// </summary>
-    public NodeBuilder TextWrapped(ReadOnlySeString label, Action<ITextNode>? configure = null)
-        => TextWrapped(label, out _, configure);
+    public NodeBuilder TextWrapped(ReadOnlySeString label, int lineCount, Action<ITextNode>? configure = null)
+        => TextWrapped(label, lineCount, out _, configure);
 
     /// <summary>
     /// Adds a <see cref="TextNode"/> that will fill the current content area.
