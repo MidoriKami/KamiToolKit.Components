@@ -82,7 +82,7 @@ public class IconSelectionNode : ResNode {
             node.Size = new Vector2(Height / 2.0f, Height / 2.0f);
         }
 
-        IconButtonListNode.RecalculateLayout();
+        IconButtonListNode.UpdateLayout();
 
         SelectedIconImageNode.Size = new Vector2(Height / 2.0f, Height / 2.0f);
         SelectedIconImageNode.Position = new Vector2(0.0f, Height / 2.0f);

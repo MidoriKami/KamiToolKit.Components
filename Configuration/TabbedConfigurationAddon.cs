@@ -71,7 +71,7 @@ public class TabbedConfigurationAddon<T, TU, TV, TW> : NativeAddon
     /// Main layout container for this addon.
     /// </summary>
     /// <remarks>
-    /// Calling <see cref="LayoutListNode.RecalculateLayout"/> on this will
+    /// Calling <see cref="LayoutListNode.UpdateLayout"/> on this will
     /// trigger recalculate on all sub contained layout nodes.
     /// </remarks>
     protected LayoutListNode? LayoutContainer { get; private set; }

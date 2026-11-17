@@ -193,6 +193,7 @@ public class NodeBuilder {
             TextFlags = TextFlags.WordWrap | TextFlags.MultiLine,
             LineSpacing = 14,
             String = label,
+            AutoFitTextHeight = true,
         };
 
         configure?.Invoke(node);
@@ -632,7 +633,6 @@ public class NodeBuilder {
         };
 
         configure?.Invoke(node);
-        node.RecalculateLayout();
 
         return AddNode(node);
     }
@@ -663,7 +663,6 @@ public class NodeBuilder {
         }
 
         configure?.Invoke(node);
-        node.RecalculateLayout();
 
         return AddNode(node);
     }
@@ -766,7 +765,6 @@ public class NodeBuilder {
         buildTabs(contentBuilder);
 
         configure?.Invoke(node);
-        node.RecalculateLayout();
 
         return AddNode(node);
     }
@@ -799,7 +797,6 @@ public class NodeBuilder {
         }
 
         configure?.Invoke(node);
-        node.RecalculateLayout();
 
         return AddNode(node);
     }
@@ -852,7 +849,6 @@ public class NodeBuilder {
         }
 
         configure?.Invoke(node);
-        node.RecalculateLayout();
 
         return AddNode(node);
     }

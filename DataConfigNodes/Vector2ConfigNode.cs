@@ -70,7 +70,7 @@ public class Vector2ConfigNode : ResNode {
         get => InputContainerNode.NavIndex;
         set {
             InputContainerNode.NavIndex = value;
-            InputContainerNode.RecalculateLayout();
+            InputContainerNode.UpdateLayout();
         }
     }
 
@@ -84,7 +84,7 @@ public class Vector2ConfigNode : ResNode {
         get => InputContainerNode.NavUp;
         set {
             InputContainerNode.NavUp = value;
-            InputContainerNode.RecalculateLayout();
+            InputContainerNode.UpdateLayout();
         }
     }
 
@@ -98,7 +98,7 @@ public class Vector2ConfigNode : ResNode {
         get => InputContainerNode.NavDown;
         set {
             InputContainerNode.NavDown = value;
-            InputContainerNode.RecalculateLayout();
+            InputContainerNode.UpdateLayout();
         }
     }
 
@@ -171,6 +171,6 @@ public class Vector2ConfigNode : ResNode {
 
         LayoutNode.Size = Size;
         LayoutNode.Position = new Vector2(0.0f, 0.0f);
-        LayoutNode.RecalculateLayout();
+        LayoutNode.UpdateLayout();
     }
 }
