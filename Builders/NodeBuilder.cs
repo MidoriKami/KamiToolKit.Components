@@ -7,6 +7,7 @@ using Dalamud.Interface;
 using Dalamud.Interface.Textures.TextureWraps;
 using FFXIVClientStructs.FFXIV.Component.GUI;
 using KamiToolKit.BaseTypes;
+using KamiToolKit.Classes;
 using KamiToolKit.Enums;
 using KamiToolKit.Interfaces;
 using KamiToolKit.Nodes;
@@ -228,6 +229,22 @@ public class NodeBuilder {
     /// </summary>
     public NodeBuilder TextFilled(ReadOnlySeString label, Action<ITextNode>? configure = null)
         => Text(label, out _, configure);
+
+    /// <summary>
+    /// Adds a warning-styled <see cref="TextNode"/> that will fill the current content area.
+    /// </summary>
+    public NodeBuilder TextWarningFilled(ReadOnlySeString label, out TextNode node, Action<ITextNode>? configure = null)
+        => TextFilled(label, out node, text => {
+            text.FontSize = 14;
+            text.TextColor = ColorHelper.GetColor(32);
+            configure?.Invoke(text);
+        });
+
+    /// <summary>
+    /// Adds a warning-styled <see cref="TextNode"/> that will fill the current content area.
+    /// </summary>
+    public NodeBuilder TextWarningFilled(ReadOnlySeString label, Action<ITextNode>? configure = null)
+        => TextWarningFilled(label, out _, configure);
 
     /// <summary>
     /// Adds a <see cref="CheckboxNode"/>.
@@ -521,7 +538,7 @@ public class NodeBuilder {
     /// </summary>
     public NodeBuilder Search(Action<ReadOnlySeString> onInputReceived, out SearchInputNode node, ReadOnlySeString? initialValue = null, Action<ITextInputNode>? configure = null) {
         node = new SearchInputNode {
-            Size = new Vector2(100.0f, 24.0f),
+            Size = new Vector2(100.0f, 28.0f),
             String = initialValue ?? string.Empty,
             OnInputReceived = onInputReceived,
         };
