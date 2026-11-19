@@ -517,7 +517,7 @@ public class NodeBuilder {
     /// </summary>
     public NodeBuilder InputText(Action<ReadOnlySeString> onInputReceived, out TextInputNode node, ReadOnlySeString? initialValue = null, Action<ITextInputNode>? configure = null) {
         node = new TextInputNode {
-            Size = new Vector2(100.0f, 24.0f),
+            Size = new Vector2(100.0f, 28.0f),
             String = initialValue ?? string.Empty,
             OnInputReceived = onInputReceived,
         };
@@ -830,11 +830,7 @@ public class NodeBuilder {
     /// Adds a nested <see cref="VerticalListNode"/> container.
     /// </summary>
     public NodeBuilder VerticalList(Action<NodeBuilder> buildInner, out VerticalListNode node, Action<VerticalListNode>? configure = null) {
-        var innerBuilder = new NodeBuilder {
-            Node = {
-                StretchWidth = true,
-            },
-        };
+        var innerBuilder = new NodeBuilder();
         buildInner(innerBuilder);
 
         configure?.Invoke(innerBuilder.Node);
@@ -911,4 +907,28 @@ public class NodeBuilder {
     /// </summary>
     public NodeBuilder ColorEdit4(ReadOnlySeString label, Vector4 value, KnownColor defaultColor, Action<Vector4> onColorConfirmed, Action<Vector4>? onColorPreviewed = null, Action? onColorCancelled = null, Action<IColorEditNode>? configure = null)
         => ColorEdit4(label, value, defaultColor, onColorConfirmed, out _, onColorPreviewed, onColorCancelled, configure);
+
+    /// <summary>
+    /// Adds a <see cref="ColorEditNode"/> for picking a Vector4 color without a label.
+    /// </summary>
+    public NodeBuilder ColorEdit4(Vector4 value, Vector4? defaultValue, Action<Vector4> onColorConfirmed, out ColorEditNode node, Action<Vector4>? onColorPreviewed = null, Action? onColorCancelled = null, Action<IColorEditNode>? configure = null)
+        => ColorEdit4(string.Empty, value, defaultValue, onColorConfirmed, out node, onColorPreviewed, onColorCancelled, configure);
+
+    /// <summary>
+    /// Adds a <see cref="ColorEditNode"/> for picking a Vector4 color without a label.
+    /// </summary>
+    public NodeBuilder ColorEdit4(Vector4 value, Vector4? defaultValue, Action<Vector4> onColorConfirmed, Action<Vector4>? onColorPreviewed = null, Action? onColorCancelled = null, Action<IColorEditNode>? configure = null)
+        => ColorEdit4(value, defaultValue, onColorConfirmed, out _, onColorPreviewed, onColorCancelled, configure);
+
+    /// <summary>
+    /// Adds a <see cref="ColorEditNode"/> for picking a Vector4 color with a KnownColor default, without a label.
+    /// </summary>
+    public NodeBuilder ColorEdit4(Vector4 value, KnownColor defaultColor, Action<Vector4> onColorConfirmed, out ColorEditNode node, Action<Vector4>? onColorPreviewed = null, Action? onColorCancelled = null, Action<IColorEditNode>? configure = null)
+        => ColorEdit4(value, defaultColor.Vector(), onColorConfirmed, out node, onColorPreviewed, onColorCancelled, configure);
+
+    /// <summary>
+    /// Adds a <see cref="ColorEditNode"/> for picking a Vector4 color with a KnownColor default, without a label.
+    /// </summary>
+    public NodeBuilder ColorEdit4(Vector4 value, KnownColor defaultColor, Action<Vector4> onColorConfirmed, Action<Vector4>? onColorPreviewed = null, Action? onColorCancelled = null, Action<IColorEditNode>? configure = null)
+        => ColorEdit4(value, defaultColor, onColorConfirmed, out _, onColorPreviewed, onColorCancelled, configure);
 }
