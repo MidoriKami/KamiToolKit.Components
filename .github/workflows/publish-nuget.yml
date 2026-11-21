@@ -24,9 +24,9 @@ jobs:
       DALAMUD_HOME: /tmp/dalamud
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-dotnet@v4
+      - uses: actions/setup-dotnet@v5
         with:
           dotnet-version: 10.0.x
 
@@ -93,42 +93,16 @@ jobs:
       - name: Pack
         env:
           INITIAL_VERSION: ${{ steps.version.outputs.version }}
-          IS_TAG_PUSH: ${{ startsWith(github.ref, 'refs/tags/') }}
         run: |
           set -euo pipefail
-
-          bump_patch() {
-            local v="$1"
-            local BASE="${v%%-*}"
-            local MA MI PA
-            IFS='.' read -r MA MI PA <<< "$BASE"
-            MA=${MA:-0}
-            MI=${MI:-0}
-            PA=${PA:-0}
-            PA=$((PA + 1))
-            echo "${MA}.${MI}.${PA}"
-          }
-
-          pack() {
-            local ver="$1"
-            rm -rf ./artifacts
-            mkdir -p ./artifacts
-            dotnet pack KamiToolKit.Components.csproj \
-              --configuration Release \
-              -p:DALAMUD_HOME=/tmp/dalamud \
-              -p:PackageVersion="$ver" \
-              -p:Version="$ver" \
-              --output ./artifacts
-          }
-
-          VER="$INITIAL_VERSION"
-          MAX_ATTEMPTS=10
-
-          for attempt in $(seq 1 "$MAX_ATTEMPTS"); do
-            echo "Pack attempt $attempt / $MAX_ATTEMPTS (version $VER)"
-            pack "$VER"
-            break
-          done
+          rm -rf ./artifacts
+          mkdir -p ./artifacts
+          dotnet pack KamiToolKit.Components.csproj \
+            --configuration Release \
+            -p:DALAMUD_HOME="$DALAMUD_HOME" \
+            -p:PackageVersion="$INITIAL_VERSION" \
+            -p:Version="$INITIAL_VERSION" \
+            --output ./artifacts
 
       - name: NuGet login
         id: login
@@ -137,4 +111,4 @@ jobs:
           user: ${{ secrets.NUGET_USER }}
 
       - name: NuGet push
-        run: dotnet nuget push ./artifacts/*.nupkg --api-key ${{ steps.login.outputs.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
+        run: dotnet nuget push ./artifacts/*.nupkg --api-key ${{ steps.login.outputs.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
