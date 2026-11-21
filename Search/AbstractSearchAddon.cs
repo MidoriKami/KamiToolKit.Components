@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using FFXIVClientStructs.FFXIV.Component.GUI;
 using KamiToolKit.BaseTypes;
@@ -22,7 +22,7 @@ public class AbstractSearchAddon<T, TU> : NativeAddon where TU : ListItemNode<T>
         get;
         set {
             field = value;
-            ResultsListNode?.OptionsList = value;
+            ResultsListNode?.Options = value;
         }
     } = [];
 
@@ -46,7 +46,7 @@ public class AbstractSearchAddon<T, TU> : NativeAddon where TU : ListItemNode<T>
     /// Main layout container for this addon.
     /// </summary>
     /// <remarks>
-    /// Calling <see cref="LayoutListNode.RecalculateLayout"/> on this will
+    /// Calling <see cref="LayoutListNode.UpdateLayout"/> on this will
     /// trigger recalculate on all sub contained layout nodes.
     /// </remarks>
     protected LayoutListNode? LayoutContainer { get; private set; }
@@ -77,7 +77,7 @@ public class AbstractSearchAddon<T, TU> : NativeAddon where TU : ListItemNode<T>
     /// Function that is called when the OK button is clicked.
     /// </summary>
     protected virtual void OnConfirmClicked() {
-        SelectedOptions = ResultsListNode?.SelectedItems ?? [];
+        SelectedOptions = ResultsListNode?.SelectedOptions ?? [];
         ConfirmedSelections?.Invoke(SelectedOptions);
         Close();
     }
@@ -100,7 +100,7 @@ public class AbstractSearchAddon<T, TU> : NativeAddon where TU : ListItemNode<T>
         LayoutContainer = new VerticalListNode {
             Position = ContentStartPosition,
             Size = ContentSize,
-            FitWidth = true,
+            StretchWidth = true,
 
             InitialNodes = [
                 SearchInputNode = new SearchInputNode {
@@ -116,7 +116,7 @@ public class AbstractSearchAddon<T, TU> : NativeAddon where TU : ListItemNode<T>
                     Height = ContentSize.Y - 26.0f - 26.0f - 16.0f,
                     AllowMultipleSelection = AllowMultiselect,
                     ItemSpacing = 2.0f,
-                    OptionsList = OptionsList,
+                    Options = OptionsList,
                     NavIndex = 2,
                     NavUp = 1,
                     NavDown = 100,

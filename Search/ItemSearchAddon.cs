@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using KamiToolKit.Components.ListItemNodes;
 using KamiToolKit.Extensions;
 using Lumina.Excel.Sheets;
@@ -16,7 +16,7 @@ public class ItemSearchAddon : AbstractSearchAddon<Item, ItemListItemNode> {
     protected override void OnSearchInputReceived(ReadOnlySeString searchString) {
         var searchRegex = searchString.AsRegex();
 
-        ResultsListNode?.OptionsList = OptionsList.Where(option => {
+        ResultsListNode?.Options = OptionsList.Where(option => {
             if (searchRegex.IsMatch(option.Name.ToString())) return true;
 
             var uiCategory = option.ItemUICategory.ValueNullable;

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using FFXIVClientStructs.FFXIV.Client.UI.Misc;
 using FFXIVClientStructs.FFXIV.Component.GUI;
@@ -29,7 +29,7 @@ public class GearsetSearchAddon : AbstractSearchAddon<RaptureGearsetModule.Gears
     protected override void OnSearchInputReceived(ReadOnlySeString searchString) {
         var searchRegex = searchString.AsRegex();
 
-        ResultsListNode?.OptionsList = OptionsList.Where(option => searchRegex.IsMatch(option.NameString)).ToList();
+        ResultsListNode?.Options = OptionsList.Where(option => searchRegex.IsMatch(option.NameString)).ToList();
 
         base.OnSearchInputReceived(searchString);
     }
