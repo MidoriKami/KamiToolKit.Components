@@ -45,10 +45,6 @@ public class AbstractSearchAddon<T, TU> : NativeAddon where TU : ListItemNode<T>
     /// <summary>
     /// Main layout container for this addon.
     /// </summary>
-    /// <remarks>
-    /// Calling <see cref="LayoutListNode.UpdateLayout"/> on this will
-    /// trigger recalculate on all sub contained layout nodes.
-    /// </remarks>
     protected LayoutListNode? LayoutContainer { get; private set; }
 
     /// <summary>

@@ -68,10 +68,6 @@ public class ConfigurationAddon<T, TU, TV> : NativeAddon where TV : EntryConfigu
     /// <summary>
     /// Main layout container for this addon.
     /// </summary>
-    /// <remarks>
-    /// Calling <see cref="LayoutListNode.UpdateLayout"/> on this will
-    /// trigger recalculate on all sub contained layout nodes.
-    /// </remarks>
     protected LayoutListNode? LayoutContainer { get; private set; }
 
     /// <summary>
