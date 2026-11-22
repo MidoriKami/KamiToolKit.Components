@@ -14,7 +14,7 @@ public class TabbedContentBuilder(TabbedContentNode node) {
     /// Adds a tab using a VerticalListNode backed builder for the contents.
     /// </summary>
     public TabbedContentBuilder AddTab(ReadOnlySeString name, Action<NodeBuilder> buildTabContents, ReadOnlySeString? tooltip = null, Action? onTabChanged = null) {
-        var innerBuilder = new NodeBuilder();
+        var innerBuilder = new NodeBuilder<VerticalListNode>();
         buildTabContents(innerBuilder);
 
         node.AddTab(name, innerBuilder.Build(), tooltip, onTabChanged);

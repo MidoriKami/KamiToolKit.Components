@@ -1,5 +1,6 @@
 using System;
 using System.Numerics;
+using KamiToolKit.Interfaces;
 using KamiToolKit.Nodes;
 
 namespace KamiToolKit.Components.Builders;
@@ -11,25 +12,29 @@ public static class NativeUiBuilder {
     /// <summary>
     /// Creates a new root vertical list node.
     /// </summary>
-    public static VerticalListNode Create(Action<NodeBuilder> buildAction)
+    public static ILayoutNode Create(Action<NodeBuilder> buildAction)
         => Create(default, default, buildAction);
 
     /// <summary>
     /// Creates a new root vertical list node with the specified size.
     /// </summary>
-    public static VerticalListNode Create(Vector2 size, Action<NodeBuilder> buildAction)
+    public static ILayoutNode Create(Vector2 size, Action<NodeBuilder> buildAction)
         => Create(size, default, buildAction);
 
     /// <summary>
     /// Creates a new root vertical list node with the specified size and position.
     /// </summary>
-    public static VerticalListNode Create(Vector2 size, Vector2 position, Action<NodeBuilder> buildAction) {
-        var builder = new NodeBuilder {
+    public static ILayoutNode Create(Vector2 size, Vector2 position, Action<NodeBuilder> buildAction) {
+        var node = new VerticalListNode {
+            StretchWidth = true,
             Size = size,
             Position = position,
         };
 
+        var builder = new NodeBuilder<VerticalListNode>(node);
+
         buildAction.Invoke(builder);
+
         return builder.Build();
     }
 }

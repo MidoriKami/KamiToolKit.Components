@@ -17,73 +17,68 @@ using Lumina.Text.ReadOnly;
 namespace KamiToolKit.Components.Builders;
 
 /// <summary>
-/// Builder class for constructing UI node trees backed by a <see cref="VerticalListNode"/>.
+/// Generic builder class for constructing UI node trees backed by a specific <see cref="ILayoutNode"/> type.
+/// Inherits from <see cref="NodeBuilder"/> so it can be passed to <c>Action{NodeBuilder}</c> callbacks.
+/// </summary>
+/// <typeparam name="T">The type of layout node this builder creates.</typeparam>
+public class NodeBuilder<T> : NodeBuilder where T : ILayoutNode, new() {
+
+    /// <summary>
+    /// The owned layout node, created by the constructor.
+    /// </summary>
+    private readonly T layoutNode;
+
+    /// <summary>
+    /// Gets the layout node that children are added to.
+    /// </summary>
+    protected override ILayoutNode LayoutNode => layoutNode;
+
+    /// <summary>
+    /// Constructor for a NodeBuilder that builds into a new layout node of type <typeparamref name="T"/>.
+    /// </summary>
+    public NodeBuilder() {
+        layoutNode = new T();
+        if (layoutNode is VerticalListNode verticalList) {
+            verticalList.StretchWidth = true;
+        }
+    }
+
+    /// <summary>
+    /// Constructor for a NodeBuilder that adds children directly to an existing target node.
+    /// </summary>
+    /// <param name="targetLayoutNode">The node that children will be added to instead of creating a new one.</param>
+    internal NodeBuilder(T targetLayoutNode) {
+        layoutNode = targetLayoutNode;
+    }
+
+    /// <summary>
+    /// Builds the resulting node of type <typeparamref name="T"/>.
+    /// </summary>
+    public new T Build() => layoutNode;
+}
+
+/// <summary>
+/// Abstract base class for constructing UI node trees.
+/// All builder methods are implemented here; derived classes provide the concrete layout node.
 /// </summary>
 [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
-public class NodeBuilder {
+public abstract class NodeBuilder {
 
     /// <summary>
-    /// Built node instance for inheritors to use.
+    /// Gets the layout node that children are added to.
     /// </summary>
-    protected readonly VerticalListNode Node = new();
+    protected abstract ILayoutNode LayoutNode { get; }
 
     /// <summary>
-    /// Gets or sets the inner vertical list node's size.
+    /// Builds the resulting layout node.
     /// </summary>
-    public Vector2 Size {
-        get => Node.Size;
-        set => Node.Size = value;
-    }
-
-    /// <summary>
-    /// Gets or sets the inner vertical list node's position.
-    /// </summary>
-    public Vector2 Position {
-        get => Node.Position;
-        set => Node.Position = value;
-    }
-
-    /// <summary>
-    /// Gets or sets the inner vertical list node's fit contents setting.
-    /// </summary>
-    public bool FitContents {
-        get => Node.FitContents;
-        set => Node.FitContents = value;
-    }
-
-    /// <summary>
-    /// Gets or sets the inner vertical list node's first item spacing.
-    /// </summary>
-    public float FirstItemSpacing {
-        get => Node.FirstItemSpacing;
-        set => Node.FirstItemSpacing = value;
-    }
-
-    /// <summary>
-    /// Gets or sets the inner vertical list node's item spacing.
-    /// </summary>
-    public float ItemSpacing {
-        get => Node.ItemSpacing;
-        set => Node.ItemSpacing = value;
-    }
-
-    /// <summary>
-    /// Constructor for a NodeBuilder.
-    /// </summary>
-    public NodeBuilder()
-        => Node.StretchWidth = true;
-
-    /// <summary>
-    /// Builds the resulting node.
-    /// </summary>
-    public VerticalListNode Build()
-        => Node;
+    public virtual ILayoutNode Build() => LayoutNode;
 
     /// <summary>
     /// Adds a predefined node to this builder.
     /// </summary>
     public NodeBuilder AddNode(NodeBase node) {
-        Node.AddNode(node);
+        LayoutNode.AddNode(node);
         return this;
     }
 
@@ -636,15 +631,13 @@ public class NodeBuilder {
     /// Warning, if you need to display a lot of elements use a <see cref="ListNode{T,TU}"/> instead.
     /// </remarks>
     public NodeBuilder Scrolling(Action<NodeBuilder> buildInner, out ScrollingNode<VerticalListNode> node, Action<IScrollingNode<VerticalListNode>>? configure = null) {
-        var innerBuilder = new NodeBuilder();
+        var innerBuilder = new NodeBuilder<VerticalListNode>();
         buildInner(innerBuilder);
 
-        var listNode = innerBuilder.Node;
+        var verticalListNode = innerBuilder.Build();
+        verticalListNode.FitContents = true;
 
-        listNode.FitContents = true;
-        listNode.StretchWidth = true;
-
-        node = new ScrollingNode<VerticalListNode>(listNode) {
+        node = new ScrollingNode<VerticalListNode>(verticalListNode) {
             AutoHideScrollBar = true,
         };
 
@@ -673,9 +666,9 @@ public class NodeBuilder {
         };
 
         foreach (var buildAction in sectionBuildActions) {
-            var innerBuilder = new NodeBuilder();
+            var innerBuilder = new NodeBuilder<VerticalListNode>();
             buildAction(innerBuilder);
-            node.AddNode(innerBuilder.Node);
+            node.AddNode(innerBuilder.Build());
         }
 
         configure?.Invoke(node);
@@ -797,21 +790,11 @@ public class NodeBuilder {
     /// <remarks>
     /// Intended to be used for cases where you want multiple nodes that may or may not be visible at any given time.
     /// </remarks>
-    public NodeBuilder FittedContent(Action<NodeBuilder> buildInner, out FittedContentNode node, Action<LayoutListNode>? configure = null) {
-        var innerBuilder = new NodeBuilder();
+    public NodeBuilder FittedContent(Action<NodeBuilder> buildInner, out FittedContentNode node, Action<ILayoutListNode>? configure = null) {
+        var innerBuilder = new NodeBuilder<FittedContentNode>();
         buildInner(innerBuilder);
 
-        node = new FittedContentNode();
-
-        foreach (var child in innerBuilder.Node.Nodes) {
-
-            // When the user built this node with buildInner, it attached the node to
-            // the builders vertical list, detach it, so we can attach to fitted content node instead.
-            child.DetachNode();
-
-            node.AddNode(child);
-        }
-
+        node = innerBuilder.Build();
         configure?.Invoke(node);
 
         return AddNode(node);
@@ -823,18 +806,19 @@ public class NodeBuilder {
     /// <remarks>
     /// Intended to be used for cases where you want multiple nodes that may or may not be visible at any given time.
     /// </remarks>
-    public NodeBuilder FittedContent(Action<NodeBuilder> buildInner, Action<LayoutListNode>? configure = null)
+    public NodeBuilder FittedContent(Action<NodeBuilder> buildInner, Action<ILayoutListNode>? configure = null)
         => FittedContent(buildInner, out _, configure);
 
     /// <summary>
     /// Adds a nested <see cref="VerticalListNode"/> container.
     /// </summary>
-    public NodeBuilder VerticalList(Action<NodeBuilder> buildInner, out VerticalListNode node, Action<VerticalListNode>? configure = null) {
-        var innerBuilder = new NodeBuilder();
+    public NodeBuilder VerticalList(Action<NodeBuilder> buildInner, out VerticalListNode node, Action<IVerticalListNode>? configure = null) {
+        var innerBuilder = new NodeBuilder<VerticalListNode>();
         buildInner(innerBuilder);
 
-        configure?.Invoke(innerBuilder.Node);
         node = innerBuilder.Build();
+
+        configure?.Invoke(node);
 
         return AddNode(node);
     }
@@ -842,23 +826,18 @@ public class NodeBuilder {
     /// <summary>
     /// Adds a nested <see cref="VerticalListNode"/> container.
     /// </summary>
-    public NodeBuilder VerticalList(Action<NodeBuilder> buildInner, Action<VerticalListNode>? configure = null)
+    public NodeBuilder VerticalList(Action<NodeBuilder> buildInner, Action<IVerticalListNode>? configure = null)
         => VerticalList(buildInner, out _, configure);
 
     /// <summary>
     /// Adds a nested <see cref="HorizontalListNode"/> container.
     /// </summary>
-    public NodeBuilder HorizontalList(Action<NodeBuilder> buildInner, out HorizontalListNode node, Action<HorizontalListNode>? configure = null) {
-        var innerBuilder = new NodeBuilder();
+    public NodeBuilder HorizontalList(Action<NodeBuilder> buildInner, out HorizontalListNode node, Action<IHorizontalListNode>? configure = null) {
+        var innerBuilder = new NodeBuilder<HorizontalListNode>();
         buildInner(innerBuilder);
 
-        node = new HorizontalListNode {
-            FitHeight = true,
-        };
-
-        foreach (var child in innerBuilder.Node.Nodes) {
-            node.AddNode(child);
-        }
+        node = innerBuilder.Build();
+        node.FitHeight = true;
 
         configure?.Invoke(node);
 
@@ -868,7 +847,7 @@ public class NodeBuilder {
     /// <summary>
     /// Adds a nested <see cref="HorizontalListNode"/> container.
     /// </summary>
-    public NodeBuilder HorizontalList(Action<NodeBuilder> buildInner, Action<HorizontalListNode>? configure = null)
+    public NodeBuilder HorizontalList(Action<NodeBuilder> buildInner, Action<IHorizontalListNode>? configure = null)
         => HorizontalList(buildInner, out _, configure);
 
     /// <summary>
